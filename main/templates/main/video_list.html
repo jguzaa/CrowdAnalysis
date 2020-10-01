@@ -1,0 +1,30 @@
+{%  extends "main/header.html" %}
+
+{% block content %}
+<div class="row">
+    <h2>Video List</h2>
+    <p>
+        <a href="{% url 'main:upload_video'%}" class="btn btn-primary btn-sm">Upload Videos</a>
+    </p>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Title</th>
+                <th>Upload date</th>
+                <th>Download</th>
+            </tr>
+        </thead>
+        <tbody>
+            {%  for video in videos %}
+                <tr>
+                    <td>{{ video.video_title }}</td>
+                    <td>{{ video.upload_date }}</td>
+                    <td>
+                        <a href="{{ video.video }}" class="btn btn-primary btn-sm" target="_blank">Download Video</a>
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

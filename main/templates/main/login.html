@@ -1,0 +1,14 @@
+{%  extends "main/header.html" %}
+
+{% block content %}
+    <form method="POST">
+    <!-- aim to combat something called Cross Site Request Forgery-->
+        {% csrf_token %}
+        <!--build the form from django and chuck it in here-->
+        {{ form.as_p }}
+        <button class="btn" style="background-color: palevioletred" type="submit">Login</button>
+    </form>
+    If you don't already have an account, <a href="/register"><strong>Register</strong></a> instead.
+{% endblock %}
+
+
