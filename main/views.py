@@ -11,6 +11,8 @@ from .models import Footage
 from plotly.offline import plot
 import plotly.graph_objs as go
 
+from .tasks import create_db_csv
+
 
 import pandas as pd
 import matplotlib.pyplot as plt
@@ -140,6 +142,10 @@ def login_request(request):
 
 
 def video_list(request):
+
+    # input trigger command
+    success = create_db_csv.delay()
+
     videos = Footage.objects.all()
     return render(request, 'main/video_list.html', {
         'videos': videos
@@ -152,7 +158,6 @@ def upload_video(request):
             instance = form.save(commit=False)
             instance.user = request.user
             instance.save()
-            # input trigger command
 
             return redirect('main:video_list')
     else:

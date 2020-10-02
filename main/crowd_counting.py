@@ -149,7 +149,9 @@ while True:
 filename = args["input"]
 
 #remove video file
-os.remove(projectDir+"/"+filename)
+vidDir = projectDir.replace("/main", "")
+vidDir = vidDir + '/media/videos'
+os.remove(vidDir+"/"+filename)
 
 filename = filename.replace("Footages/", "")
 filename = filename.replace(".m4v", "")
