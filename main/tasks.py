@@ -38,14 +38,16 @@ def create_db_csv():
     # read file
 
     data_row = []
-    list_files = os.listdir(projectDir + '/txt/')
+    list_txt_files = os.listdir(projectDir + '/txt/')
+
+    print(list_txt_files)
 
     # sort date
-    list_files.sort()
+    list_txt_files.sort()
 
     df = pd.DataFrame([], columns=col_name).rename_axis('Date')
 
-    for file in list_files:
+    for file in list_txt_files:
 
         # get date and time from file name
         date = file.split("-")[0]
