@@ -6,18 +6,16 @@
         <div class="col s12 m6">
           <div class="card blue-grey darken-1">
             <div class="card-content white-text">
-              <span class="card-title">{{user.user_dashboard_title}}</span>
+              <span class="card-title">Welcome to Crowd Analysis</span>
                   <p style="font-size: 70%">{{user.user_dashboard_published}}</p>
                   <p>{{tut.user_dashboard_content|safe}}</p>
             </div>
             <div class="card-action">
-              <a href="#">This is a link</a>
-              <a href="/task">Test</a>
+              <a href="/videos/upload">Upload your videos</a>
+              <a href="/graph">Show Graph</a>
             </div>
           </div>
         </div>
      {% endfor %}
 </div>
 {% endblock %}
-
-
