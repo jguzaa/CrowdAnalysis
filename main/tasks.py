@@ -34,18 +34,14 @@ def create_db_csv():
                 else:
                     col_name.append(str(h) + ':' + str(m))
 
-
-
-
     ######## generated csv file #############
     # read file
+
     data_row = []
     list_files = os.listdir(projectDir + '/txt/')
 
     # sort date
     list_files.sort()
-    # remove .DS file
-    list_files = list_files[1:]
 
     df = pd.DataFrame([], columns=col_name).rename_axis('Date')
 
