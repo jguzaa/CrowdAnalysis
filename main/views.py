@@ -21,7 +21,7 @@ from sklearn.linear_model import LinearRegression
 from sklearn.model_selection import train_test_split
 import operator
 
-success = ''
+processing = False
 
 # Create your views here.
 
@@ -143,26 +143,30 @@ def login_request(request):
 
 
 
-def video_list(request, success=None):
+def video_list(request):
+
+    global processing
+    msg = "Footage process complete"
 
     # input trigger command
-    #if(success != ''):
-    success = create_db_csv.delay()
+    if not processing:
+        msg = "Footage is processing"
+        processing = create_db_csv.delay()
 
     videos = Footage.objects.all()
     return render(request, 'main/video_list.html', {
         'videos': videos,
-        'status' : success
+        'status': msg
     })
 
 def upload_video(request):
+    global processing
     if request.method == "POST":
         form = FootageForm(request.POST, request.FILES)
         if form.is_valid():
             instance = form.save(commit=False)
             instance.user = request.user
             instance.save()
-
             return redirect('main:video_list')
     else:
         form = FootageForm()

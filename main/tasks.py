@@ -7,10 +7,10 @@ from celery import shared_task
 import os
 import pandas as pd
 
-@shared_task
-#def create_random_user_accounts(total):
-def create_db_csv():
 
+@shared_task
+# def create_random_user_accounts(total):
+def create_db_csv():
     projectDir = os.path.dirname(os.path.realpath(__file__))
 
     vidDir = projectDir.replace("/main", "")
@@ -99,4 +99,6 @@ def create_db_csv():
 
     updated_df.to_csv(projectDir + '/csv/db.csv')
 
-    return 'Footage reading complete'
+    print('Footage reading complete')
+
+    return True
