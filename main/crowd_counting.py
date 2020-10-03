@@ -151,10 +151,17 @@ filename = args["input"]
 #remove video file
 vidDir = projectDir.replace("/main", "")
 vidDir = vidDir + '/media/videos'
-os.remove(vidDir+"/"+filename)
+os.remove(filename)
 
 filename = filename.replace("Footages/", "")
 filename = filename.replace(".m4v", "")
+filename = filename.replace(".mp4", "")
+temp = projectDir.replace("/main", "")
+temp = temp + "/media/videos"
+filename = filename.replace(temp, "")
+
+print(filename)
+print(projectDir)
 
 with open(projectDir + '/txt/' + filename, 'w') as filehandle:
 	for listitem in data_arr:
