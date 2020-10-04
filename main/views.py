@@ -21,6 +21,8 @@ from sklearn.linear_model import LinearRegression
 from sklearn.model_selection import train_test_split
 import operator
 
+processing = False
+
 # Create your views here.
 
 # Business logic here
@@ -143,22 +145,28 @@ def login_request(request):
 
 def video_list(request):
 
+    global processing
+    msg = "Footage process complete"
+
     # input trigger command
-    success = create_db_csv.delay()
+    if not processing:
+        msg = "Footage is processing"
+        processing = create_db_csv.delay()
 
     videos = Footage.objects.all()
     return render(request, 'main/video_list.html', {
-        'videos': videos
+        'videos': videos,
+        'status': msg
     })
 
 def upload_video(request):
+    global processing
     if request.method == "POST":
         form = FootageForm(request.POST, request.FILES)
         if form.is_valid():
             instance = form.save(commit=False)
             instance.user = request.user
             instance.save()
-
             return redirect('main:video_list')
     else:
         form = FootageForm()
@@ -241,7 +249,7 @@ def plotgraph():
     # do the loop to get collected data
     collected_data = {}
     for i in range(df.shape[0]):
-        collected_data[daysName[i]] = {'time' : col_name[starth_index:endh_index], 'num':df.iloc[i - 1][starth_index:endh_index]}
+        collected_data[daysName[df.shape[0] - 1 - i]] = {'time' : col_name[starth_index:endh_index], 'num':df.iloc[i - 1][starth_index:endh_index]}
 
     return_data['collected'] = collected_data
     return return_data

@@ -7,10 +7,10 @@ from celery import shared_task
 import os
 import pandas as pd
 
-@shared_task
-#def create_random_user_accounts(total):
-def create_db_csv():
 
+@shared_task
+# def create_random_user_accounts(total):
+def create_db_csv():
     projectDir = os.path.dirname(os.path.realpath(__file__))
 
     vidDir = projectDir.replace("/main", "")
@@ -34,22 +34,20 @@ def create_db_csv():
                 else:
                     col_name.append(str(h) + ':' + str(m))
 
-
-
-
     ######## generated csv file #############
     # read file
+
     data_row = []
-    list_files = os.listdir(projectDir + '/txt/')
+    list_txt_files = os.listdir(projectDir + '/txt/')
+
+    print(list_txt_files)
 
     # sort date
-    list_files.sort()
-    # remove .DS file
-    list_files = list_files[1:]
+    list_txt_files.sort()
 
     df = pd.DataFrame([], columns=col_name).rename_axis('Date')
 
-    for file in list_files:
+    for file in list_txt_files:
 
         # get date and time from file name
         date = file.split("-")[0]
@@ -101,4 +99,6 @@ def create_db_csv():
 
     updated_df.to_csv(projectDir + '/csv/db.csv')
 
-    return 'Footage reading complete'
+    print('Footage reading complete')
+
+    return True
