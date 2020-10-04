@@ -21,20 +21,24 @@ from sklearn.linear_model import LinearRegression
 from sklearn.model_selection import train_test_split
 import operator
 
-processing = False
-
 # Create your views here.
 
 # Business logic here
 
 # render homepage
 def homepage(request):
+
     return render(request= request,
                   template_name="main/home.html",
                   context={"users": CrowdDensity.objects.all})
 
 #graph page for graph showing
 def graph(request):
+
+    if chkProcessing():
+        msg = "Footage is processing, the graphs will be update after process is finished"
+    else:
+        msg = "Footage processing is finished"
 
     data = plotgraph()
     x_data = data['predict_time']
@@ -49,7 +53,8 @@ def graph(request):
     fig.update_layout(
         title="Forecast data of number of people vs time",
         xaxis_title="time",
-        yaxis_title="ppl no."
+        yaxis_title="ppl no.",
+        height=500
     )
     predict_plot_div = plot(fig, output_type='div')
 
@@ -71,7 +76,8 @@ def graph(request):
         fig.update_layout(
             title=date,
             xaxis_title="time",
-            yaxis_title="ppl no."
+            yaxis_title="ppl no.",
+            height=500
         )
 
         this_plot_div = plot(fig, output_type='div')
@@ -80,7 +86,8 @@ def graph(request):
     return render(request, "main/graph.html", context={'more': data['more_cus'],
                                                        'less': data['less_cus'],
                                                        'predict_plot_div': predict_plot_div,
-                                                       'collected_plot_divs': collected_plot_divs
+                                                       'collected_plot_divs': collected_plot_divs,
+                                                       'status': msg
                                                        })
 
 
@@ -145,13 +152,10 @@ def login_request(request):
 
 def video_list(request):
 
-    global processing
-    msg = "Footage process complete"
-
-    # input trigger command
-    if not processing:
+    if chkProcessing():
         msg = "Footage is processing"
-        processing = create_db_csv.delay()
+    else:
+        msg = "Footage processing is finished"
 
     videos = Footage.objects.all()
     return render(request, 'main/video_list.html', {
@@ -160,13 +164,19 @@ def video_list(request):
     })
 
 def upload_video(request):
-    global processing
+    global isProcessing
+    global processStatus
+
     if request.method == "POST":
         form = FootageForm(request.POST, request.FILES)
         if form.is_valid():
             instance = form.save(commit=False)
             instance.user = request.user
             instance.save()
+
+            # start to read vid file
+            processStatus = create_db_csv.delay()
+
             return redirect('main:video_list')
     else:
         form = FootageForm()
@@ -272,3 +282,13 @@ def plotgraph():
     #     ax.label_outer()
     #
     # plt.show()
+
+def chkProcessing():
+
+    # chk temp folder to check status of file processing
+    projectDir = os.path.dirname(os.path.realpath(__file__))
+
+    if 'isProcessing' in os.listdir(projectDir + '/temps/'):
+        return True
+    else:
+        return False

@@ -1,12 +1,8 @@
-<!DOCTYPE HTML>
-<html>
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Report</title>
-</head>
-<body>
+{%  extends "main/header.html" %}
+
+{% block content %}
     <h1>Crowd analysis for the business</h1>
+    <h4> {{ status }} </h4>
     {% autoescape off %}
     {{ predict_plot_div }}
     {% endautoescape %}
@@ -19,5 +15,4 @@
         {{ collected_plot_div }}
         {% endautoescape %}
     {% endfor %}
-</body>
-</html>
+{% endblock %}

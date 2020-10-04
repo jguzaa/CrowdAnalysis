@@ -13,6 +13,12 @@ import pandas as pd
 def create_db_csv():
     projectDir = os.path.dirname(os.path.realpath(__file__))
 
+    ####### create temp file for show processing status############
+    with open(projectDir + '/temps/isProcessing', 'w') as filehandle:
+        filehandle.write('isProcessing')
+        print("======= temp file is exported =======")
+    ###############################################################
+
     vidDir = projectDir.replace("/main", "")
     vidDir = vidDir + '/media/videos'
 
@@ -101,4 +107,9 @@ def create_db_csv():
 
     print('Footage reading complete')
 
-    return True
+    ################# delete temp file to show the processing is completed ################
+    os.remove(projectDir + '/temps/isProcessing')
+    print('Temp file is deleted')
+    #######################################################################################
+
+    return 'done'
