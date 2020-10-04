@@ -265,26 +265,7 @@ def plotgraph():
     return return_data
 
 
-
-    #return [col_name[starth_index:endh_index],predict_list[starth_index:endh_index]]
-
-    # start plot graph
-    # fig, axs = plt.subplots(df.shape[0] + 1, sharex=True, sharey=True, gridspec_kw={'hspace': 1})
-    # fig.suptitle('amount of people vs time for each day')
-    # axs[0].title.set_text("Prediction")
-    # axs[0].plot(col_name[starth_index:endh_index], predict_list[starth_index:endh_index])
-    # for i in range(1, df.shape[0] + 1):
-    #     axs[i].title.set_text(daysName[i - 1])
-    #     axs[i].plot(col_name[starth_index:endh_index], df.iloc[i - 1][starth_index:endh_index])
-    #
-    # for ax in axs.flat:
-    #     ax.set(xlabel='time', ylabel='no. ppl')
-    #     ax.label_outer()
-    #
-    # plt.show()
-
 def chkProcessing():
-
     # chk temp folder to check status of file processing
     projectDir = os.path.dirname(os.path.realpath(__file__))
 
