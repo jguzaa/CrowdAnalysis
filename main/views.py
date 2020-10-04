@@ -31,7 +31,7 @@ processing = False
 def homepage(request):
     return render(request= request,
                   template_name="main/home.html",
-                  context={"users": CrowdDensity.objects.all})
+                  context={"users": CrowdDensity.objects.all},)
 
 #graph page for graph showing
 def graph(request):
