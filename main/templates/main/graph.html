@@ -1,6 +1,6 @@
 {%  extends "main/header.html" %}
-
 {% block content %}
+ <div class="row">
     <h1>Crowd analysis for the business</h1>
     <h4> {{ status }} </h4>
     {% autoescape off %}
@@ -15,4 +15,5 @@
         {{ collected_plot_div }}
         {% endautoescape %}
     {% endfor %}
+ </div>
 {% endblock %}
