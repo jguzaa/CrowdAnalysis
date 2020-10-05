@@ -32,3 +32,5 @@
 
 #the demo footage file can be download here
 https://drive.google.com/file/d/1twa70eMk0FGYZWR7jaWQCQu5FydU8ZOM/view?usp=sharing
+
+Note: this project will find the average people in each 10 minute of the video file. If you want to do the testing, you can edit line 67 of file /main/crowd_counting.py to change the value of 'mod_no'. the mod_no is the number of video frame in 10 minute. 
