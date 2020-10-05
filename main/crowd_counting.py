@@ -63,8 +63,8 @@ framerate = vs.get(cv2.CAP_PROP_FPS)
 
 # For demo 10 mins clip represent 300 mins
 #mod_no = (period * 60 * framerate) / 30
-mod_no = 20
-#mod_no = (period * 60 * framerate)
+#mod_no = 20
+mod_no = (period * 60 * framerate)
 
 
 # loop over the frames from the video stream
