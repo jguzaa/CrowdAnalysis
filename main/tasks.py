@@ -6,6 +6,7 @@ from django.utils.crypto import get_random_string
 from celery import shared_task
 import os
 import pandas as pd
+from datetime import datetime
 
 
 @shared_task
@@ -49,14 +50,14 @@ def create_db_csv():
     print(list_txt_files)
 
     # sort date
-    list_txt_files.sort()
+    # list_txt_files.sort()
 
     df = pd.DataFrame([], columns=col_name).rename_axis('Date')
 
     for file in list_txt_files:
 
         # get date and time from file name
-        date = file.split("-")[0]
+        date = datetime.strptime(file.split("-")[0], '%d%b%Y')
         time = file.split("-")[1]
         time = time[:2] + ":" + time[2:]
 
@@ -95,15 +96,18 @@ def create_db_csv():
     if len(list_csv) > 0:
         old_df = pd.read_csv(projectDir + "/csv/db.csv")
         old_df = old_df.set_index('Date')
+        old_df.index = pd.to_datetime(old_df.index)
+
     else:
         old_df = pd.DataFrame([], columns=col_name).rename_axis('Date')
+        old_df.index = pd.to_datetime(old_df.index)
 
     updated_df = pd.concat([old_df, df])
     updated_df = updated_df.groupby(level=0).sum()
 
-    print(updated_df)
-
     updated_df.to_csv(projectDir + '/csv/db.csv')
+
+    print(updated_df)
 
     print('Footage reading complete')
 

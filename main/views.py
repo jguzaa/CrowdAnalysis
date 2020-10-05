@@ -60,7 +60,6 @@ def graph(request):
 
     # do for loop for collected data plotting
     collected = data['collected']
-    dates = []
     collected_plot_divs = []
 
     for date in collected:
@@ -259,7 +258,7 @@ def plotgraph():
     # do the loop to get collected data
     collected_data = {}
     for i in range(df.shape[0]):
-        collected_data[daysName[df.shape[0] - 1 - i]] = {'time' : col_name[starth_index:endh_index], 'num':df.iloc[i - 1][starth_index:endh_index]}
+        collected_data[daysName[i]] = {'time' : col_name[starth_index:endh_index], 'num':df.iloc[i][starth_index:endh_index]}
 
     return_data['collected'] = collected_data
     return return_data
