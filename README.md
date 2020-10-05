@@ -1,12 +1,13 @@
 # CrowdAnalysis
 #Duc contribution
-- Both worked on reading and understanding the source code: https://www.pyimagesearch.com/2020/06/01/opencv-social-distancing-detector/
-- Worked on the source code to forecast the pattern of the crowd: https://pythonprogramming.net/forecasting-predicting-machine-learning-tutorial/
-- Generate the graph from the .txt file
-- Collected the footage for testing
+- Set up and develop Django framework for the web application
+- Design the users, videos database and user interface
+- Techonology research and consultants for intergrating the ML model and Django web application
+- User authentication and registration
+- Video upload functions 
 
 #Jongjet contribution
-- Intregreate the previous implementation to Django web application
+- Integrate the previous implementation to Django web application
 - rabittMQ server and celery asyncronus task management implementation
 - Video processing status checking implementation
 - CSV file databse generating and managing
